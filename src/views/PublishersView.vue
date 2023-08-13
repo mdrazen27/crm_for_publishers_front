@@ -2,11 +2,12 @@
   <v-container fluid>
     <v-data-table
       :footer-props="{
-        pageText: '{0}-{1} od {2}',
+        pageText: '{0}-{1} of {2}',
         itemsPerPageText: 'Publishers per page',
+        itemsPerPageOptions: [10, 20],
       }"
       :headers="publisherHeaders"
-      :items="publishers"
+      :items="upToDatePublishers"
       :search="searchPublisherString"
       class="elevation-1"
     >
@@ -21,6 +22,17 @@
             label="Search (name)"
             single-line
           ></v-text-field>
+          <v-spacer></v-spacer>
+          <v-btn class="mb-2" color="primary" dark @click="createNewPublisher"
+            >Add</v-btn
+          >
+          <add-or-edit-publisher-component
+            @reloadPublishers="loadAllPublishers"
+            @updatePublisherData="updatePublisherData"
+            @closeDialogEvent="showDialog = false"
+            :showDialog="showDialog"
+            :publisher="publisher"
+          />
         </v-toolbar>
       </template>
       <template v-slot:item.active="{ item }">
@@ -70,23 +82,33 @@
 
 <script>
 import {
-  getAllPublishers,
   deletePublisher,
+  getAllPublishers,
   togglePublisherStatus,
 } from "@/api/publishers";
 import state from "@/store";
 import { publisherHeaders } from "@/mixins/tableHeaders";
+import AddOrEditPublisherComponent from "@/components/AddOrEditPublisherComponent";
 
 export default {
   name: "PublishersView",
+  components: { AddOrEditPublisherComponent },
   data: () => ({
     searchPublisherString: "",
     publisherHeaders: [],
+    itms: [10, 20],
     publishers: [],
+    showDialog: false,
+    publisher: null,
   }),
   created() {
     this.loadAllPublishers();
     this.publisherHeaders = publisherHeaders;
+  },
+  computed: {
+    upToDatePublishers() {
+      return this.publishers;
+    },
   },
   methods: {
     async loadAllPublishers() {
@@ -98,7 +120,8 @@ export default {
       }
     },
     async editPublisher(item) {
-      console.log(item);
+      this.publisher = item;
+      this.showDialog = true;
     },
     async deleteSelectedPublisher(item) {
       try {
@@ -123,6 +146,18 @@ export default {
         color: "green",
         text: message,
       });
+    },
+    createNewPublisher() {
+      this.publisher = null;
+      this.showDialog = true;
+    },
+    updatePublisherData(item) {
+      let original = this.publishers.findIndex((e) => e.id === item.id);
+      if (original !== -1) {
+        this.publishers[original].name = item.name;
+        this.publishers[original].email = item.email;
+        this.publishers[original].updated_at = item.updated_at;
+      }
     },
   },
 };

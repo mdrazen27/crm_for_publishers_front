@@ -80,7 +80,6 @@ function validateUserPermissions(to, userRole) {
     if (route.name === to.name && route.name !== "login") {
       if (route.meta.roles.includes(userRole.id)) final = true;
     } else if (route.to === "login") {
-      console.log("dfsafsd");
       final = true;
     }
   });
