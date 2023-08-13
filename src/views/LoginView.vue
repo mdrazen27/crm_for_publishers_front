@@ -1,8 +1,18 @@
 <template>
   <v-container>
-    <v-row class="justify-center mt-10">
-      <v-col cols="6">
-        <v-form ref="form" v-model="valid" lazy-validation @submit.prevent>
+    <v-row>
+      <v-col cols="12">
+        <v-img
+          :src="require('@/assets/logo.svg')"
+          class="my-3"
+          contain
+          height="120"
+        />
+      </v-col>
+    </v-row>
+    <v-row class="justify-center mt-5">
+      <v-col cols="8">
+        <v-form ref="form" v-model="valid" @submit.prevent>
           <v-text-field
             v-model="email"
             :rules="fieldRules.email"
@@ -11,6 +21,7 @@
             counter="200"
             label="Email"
             required
+            @focusout="resetValidation"
           ></v-text-field>
 
           <v-text-field
@@ -20,6 +31,7 @@
             counter="200"
             label="Password"
             required
+            @focusout="resetValidation"
             type="password"
           ></v-text-field>
 
