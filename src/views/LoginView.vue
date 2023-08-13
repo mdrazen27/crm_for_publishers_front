@@ -2,12 +2,7 @@
   <v-container>
     <v-row class="justify-center mt-10">
       <v-col cols="6">
-        <v-form
-          ref="form"
-          v-model="valid"
-          lazy-validation
-          @submit.prevent
-        >
+        <v-form ref="form" v-model="valid" lazy-validation @submit.prevent>
           <v-text-field
             v-model="email"
             :rules="fieldRules.email"
@@ -54,7 +49,7 @@ export default {
     password: "",
     fieldRules: [],
     checkbox: true,
-    user: null
+    user: null,
   }),
   created() {
     this.fieldRules = fieldRules;
@@ -72,17 +67,20 @@ export default {
       try {
         let response = await login({
           email: this.email,
-          password: this.password
+          password: this.password,
         });
-        await state.dispatch("auth/setAuthToken", response.accessToken);
         await state.dispatch("auth/setUser", response.user);
         await state.dispatch("auth/setRole", response.user.role_id);
-        const userRole = rolesMap.find(
-          (e) => e.id === response.user.role_id
-        );
+        await state.dispatch("auth/setAuthToken", response.accessToken);
+        const userRole = rolesMap.find((e) => e.id === response.user.role_id);
         router.push({ name: userRole.redirect }).catch((err) => {
           // Ignore the vuex err regarding navigating to the page they are already on.
-          if (err.name !== "NavigationDuplicated" && !err.message.includes("Avoided redundant navigation to current location")) {
+          if (
+            err.name !== "NavigationDuplicated" &&
+            !err.message.includes(
+              "Avoided redundant navigation to current location"
+            )
+          ) {
             // But print any other errors to the console
             console.error(err);
           }
@@ -90,8 +88,8 @@ export default {
       } catch (e) {
         await state.dispatch("errorHandler/errorHandler", e);
       }
-    }
+    },
   },
-  components: {}
+  components: {},
 };
 </script>

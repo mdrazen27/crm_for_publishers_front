@@ -9,27 +9,27 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   plugins: [
     createPersistedState({
-      storage: window.sessionStorage
-    })
+      storage: window.sessionStorage,
+    }),
   ],
   state: {
     snackbar: {
       active: false,
       color: "red",
-      text: ""
-    }
+      text: "",
+    },
   },
   getters: {},
   mutations: {
     SET_SNACKBAR(state, snackbar) {
       state.snackbar = snackbar;
-    }
+    },
   },
   actions: {
     showSnackbar({ commit }, snackbar) {
       snackbar.active = true;
       commit("SET_SNACKBAR", snackbar);
-    }
+    },
   },
-  modules: { auth, errorHandler }
+  modules: { auth, errorHandler },
 });
