@@ -2,7 +2,7 @@
   <div>
     <v-navigation-drawer v-model="drawer" app>
       <v-list>
-        <v-list-item :to="'s' + '/profile'" link>
+        <v-list-item @click="redirectToAdvertisementsPage" link>
           <v-list-item-content>
             <v-list-item-title class="text-h6">
               {{ user?.email }}
@@ -14,17 +14,25 @@
       <v-divider></v-divider>
 
       <v-list dense nav>
+        <template v-if="this.user.role_id === 1">
+          <side-menu-item
+            class_name="ml-4"
+            route_name="publishers"
+            icon="mdi mdi-domain"
+            title="Publishers"
+            tooltip="Publishers administration"
+          />
+          <side-menu-item
+            class_name="ml-4"
+            route_name="admins"
+            icon="mdi mdi-account-edit"
+            title="Admins"
+            tooltip="Admin users"
+          />
+        </template>
         <side-menu-item
-          v-if="this.user.role_id === 1"
           class_name="ml-4"
-          route_name="publishers"
-          icon="mdi mdi-domain"
-          title="Publishers"
-          tooltip="Publishers administration"
-        />
-        <side-menu-item
-          class_name="ml-4"
-          route_name="home"
+          route_name="advertisements"
           icon="mdi mdi-advertisements"
           title="Advertisements"
           tooltip="Advertisements"
@@ -79,8 +87,10 @@ export default {
       router.push({ name: "login" });
     },
 
-    redirectToHomePage() {
-      router.push({ name: "advertisements" });
+    redirectToAdvertisementsPage() {
+      if (router.currentRoute.name !== "advertisements") {
+        router.push({ name: "advertisements" });
+      }
     },
   },
 };

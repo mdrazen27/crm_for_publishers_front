@@ -6,3 +6,9 @@ export const defaultPublisher = {
   email: "",
   password: "",
 };
+
+export const defaultAdmin = {
+  id: null,
+  email: "",
+  password: "",
+};

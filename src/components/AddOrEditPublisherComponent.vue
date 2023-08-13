@@ -67,7 +67,7 @@
           Close
         </v-btn>
         <v-btn
-          :disable="!enablePublisherSave"
+          :disabled="!enablePublisherSave"
           color="green darken-1 font-weight-bold"
           text
           @click="validatePublisherForm"

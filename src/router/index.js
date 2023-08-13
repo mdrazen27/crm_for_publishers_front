@@ -7,12 +7,12 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
-    name: "home",
+    path: "/advertisements",
+    name: "advertisements",
     component: HomeView,
     meta: {
       auth: true,
-      roles: [1],
+      roles: [1, 2],
     },
   },
   {
@@ -26,6 +26,16 @@ const routes = [
     name: "publishers",
     component: () =>
       import(/* webpackChunkName: "publishers" */ "@/views/PublishersView"),
+    meta: {
+      auth: true,
+      roles: [1],
+    },
+  },
+  {
+    path: "/admin-users",
+    name: "admins",
+    component: () =>
+      import(/* webpackChunkName: "adminUsers" */ "@/views/AdminUsersView"),
     meta: {
       auth: true,
       roles: [1],
