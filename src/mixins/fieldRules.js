@@ -4,4 +4,5 @@ export const fieldRules = {
     (v) => (!!v && !!v.trim()) || "Field is required",
     (v) => /.+@.+\..+/.test(v) || "Please enter valid email",
   ],
+  password: [(v) => (!!v && !!v.trim()) || "Field is required"],
 };

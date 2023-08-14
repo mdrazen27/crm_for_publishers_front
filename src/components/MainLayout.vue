@@ -31,11 +31,26 @@
           />
         </template>
         <side-menu-item
+          v-if="this.user.role_id === 2"
+          class_name="ml-4"
+          route_name="publisherProfile"
+          icon="mdi mdi-account"
+          title="Profile"
+          tooltip="Profile"
+        />
+        <side-menu-item
           class_name="ml-4"
           route_name="advertisements"
           icon="mdi mdi-advertisements"
           title="Advertisements"
           tooltip="Advertisements"
+        />
+        <side-menu-item
+          class_name="ml-4"
+          route_name="changePassword"
+          icon="mdi mdi-lock-reset"
+          title="Change Password"
+          tooltip="Change password"
         />
       </v-list>
     </v-navigation-drawer>

@@ -8,3 +8,12 @@ export const login = async (data) => {
   );
   return response.data;
 };
+
+export const changePassword = async (data) => {
+  let response = await httpClient(
+    process.env.VUE_APP_API_URL + "/change-password",
+    "POST",
+    data
+  );
+  return response.data;
+};
