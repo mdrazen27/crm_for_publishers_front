@@ -1,6 +1,6 @@
 <template>
-  <v-container>
-    <v-row>
+  <v-container tag="full-size-centered">
+    <v-row class="no-growth">
       <v-col cols="12">
         <v-img
           :src="require('@/assets/logo.svg')"
@@ -10,15 +10,13 @@
         />
       </v-col>
     </v-row>
-    <v-row class="justify-center mt-5">
-      <v-col cols="8">
+    <v-row class="justify-center mt-5 no-growth">
+      <v-col sm="10" md="7" lg="5" xl="4">
         <v-form ref="form" v-model="valid" @submit.prevent>
           <v-text-field
             v-model="email"
             :rules="fieldRules.email"
             autofocus
-            clearable
-            counter="200"
             label="Email"
             required
             @focusout="resetValidation"
@@ -27,8 +25,6 @@
           <v-text-field
             v-model="password"
             :rules="fieldRules.required"
-            clearable
-            counter="200"
             label="Password"
             required
             @focusout="resetValidation"
@@ -38,7 +34,7 @@
           <v-checkbox v-model="checkbox" label="Remember me"></v-checkbox>
 
           <v-btn class="info mr-4 white--text" type="submit" @click="validate">
-            Prijavi se
+            Log in
           </v-btn>
         </v-form>
       </v-col>
@@ -105,3 +101,16 @@ export default {
   components: {},
 };
 </script>
+
+<style>
+full-size-centered {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.no-growth {
+  flex: 0;
+}
+</style>

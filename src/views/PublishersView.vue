@@ -19,7 +19,7 @@
             v-model="searchPublisherString"
             append-icon="mdi-magnify"
             hide-details
-            label="Search (name)"
+            label="Search"
             single-line
           ></v-text-field>
           <v-spacer></v-spacer>
@@ -40,7 +40,6 @@
           v-model="item.active"
           inset
           color="green"
-          :label="item.active ? `Yes` : `No`"
           @click="togglePublisherActiveStatus(item)"
         ></v-switch>
       </template>

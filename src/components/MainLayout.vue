@@ -84,7 +84,6 @@ export default {
 
     logout() {
       state.dispatch("auth/logout");
-      router.push({ name: "login" });
     },
 
     redirectToAdvertisementsPage() {

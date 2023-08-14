@@ -3,7 +3,7 @@
     <v-card>
       <v-data-table
         :footer-props="{
-          pageText: '{0}-{1} od {2}',
+          pageText: '{0}-{1} of {2}',
           itemsPerPageText: 'Admins per page',
           itemsPerPageOptions: [10, 20],
         }"
@@ -20,7 +20,7 @@
               v-model="searchAdminUsersString"
               append-icon="mdi-magnify"
               hide-details
-              label="Pretraga"
+              label="Search"
               single-line
             ></v-text-field>
             <v-spacer></v-spacer>

@@ -1,3 +1,5 @@
+import router from "@/router";
+
 export default {
   namespaced: true,
   state: {
@@ -53,6 +55,7 @@ export default {
       commit("REMOVE_AUTH_TOKEN");
       commit("REMOVE_USER");
       commit("SET_AUTHENTICATED", false);
+      router.push({ name: "login" });
     },
   },
   getters: {
