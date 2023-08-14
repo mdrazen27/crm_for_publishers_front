@@ -17,4 +17,5 @@ export const defaultAdvertisement = {
   id: null,
   name: "",
   url: "",
+  active: false,
 };

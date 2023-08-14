@@ -54,7 +54,7 @@
         <v-btn
           color="red darken-1 font-weight-bold"
           text
-          @click="$emit('closeDialog')"
+          @click="advertisementDialog = false"
         >
           Close
         </v-btn>
