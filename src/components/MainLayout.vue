@@ -1,12 +1,20 @@
 <template>
   <div>
-    <v-navigation-drawer v-model="drawer" app>
+    <v-navigation-drawer v-model="drawer" app :width="400">
       <v-list>
         <v-list-item @click="redirectToAdvertisementsPage" link>
           <v-list-item-content>
-            <v-list-item-title class="text-h6">
-              {{ user?.email }}
+            <v-list-item-title class="text-h5">
+              {{ navigationDrawerMainTitle }}
             </v-list-item-title>
+            <template v-if="this.user.role_id === 2">
+              <v-list-item-subtitle class="mt-3 text-h6">
+                {{ user?.email }}
+              </v-list-item-subtitle>
+              <v-list-item-subtitle class="text-right mt-2">
+                Joined: {{ joinDate }}
+              </v-list-item-subtitle>
+            </template>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -30,14 +38,6 @@
             tooltip="Admin users"
           />
         </template>
-        <side-menu-item
-          v-if="this.user.role_id === 2"
-          class_name="ml-4"
-          route_name="publisherProfile"
-          icon="mdi mdi-account"
-          title="Profile"
-          tooltip="Profile"
-        />
         <side-menu-item
           class_name="ml-4"
           route_name="advertisements"
@@ -81,6 +81,8 @@ export default {
       name: "",
       email: "",
       role_id: null,
+      publisherName: "",
+      created_at: "",
     },
     drawer: false,
     preview: true,
@@ -88,6 +90,16 @@ export default {
   }),
   components: {
     SideMenuItem,
+  },
+  computed: {
+    navigationDrawerMainTitle() {
+      return this.user?.publisherName || this.user?.email;
+    },
+    joinDate() {
+      let date = new Date(this.user.created_at);
+      console.log(date);
+      return this.user.created_at.split(" ")[0];
+    },
   },
   created() {
     this.loadUser();
