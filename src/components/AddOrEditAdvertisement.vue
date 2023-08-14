@@ -97,6 +97,7 @@ export default {
     },
     async saveAdvertisement() {
       try {
+        this.enableAdvertisementSave = false;
         if (this.advertisementItem.id) {
           let response = await updateAdvertisement(this.advertisementItem);
           await state.dispatch("showSnackbar", {
@@ -112,11 +113,11 @@ export default {
           });
           this.$emit("reloadAdvertisements");
         }
-        this.enableAdvertisementSave = true;
         this.closeDialog();
       } catch (e) {
         await state.dispatch("errorHandler/errorHandler", e);
       }
+      this.enableAdvertisementSave = true;
     },
     closeDialog() {
       this.$emit("closeDialogEvent");

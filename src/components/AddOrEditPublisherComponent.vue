@@ -105,6 +105,7 @@ export default {
     },
     async savePublisher() {
       try {
+        this.enablePublisherSave = false;
         if (this.publisherItem.id) {
           let response = await updatePublisher(this.publisherItem);
           await state.dispatch("showSnackbar", {
@@ -120,11 +121,11 @@ export default {
           });
           this.$emit("reloadPublishers");
         }
-        this.enablePublisherSave = true;
         this.closeDialog();
       } catch (e) {
         await state.dispatch("errorHandler/errorHandler", e);
       }
+      this.enablePublisherSave = true;
     },
     closeDialog() {
       this.$emit("closeDialogEvent");

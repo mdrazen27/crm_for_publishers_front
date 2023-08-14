@@ -33,7 +33,12 @@
 
           <v-checkbox v-model="checkbox" label="Remember me"></v-checkbox>
 
-          <v-btn class="info mr-4 white--text" type="submit" @click="validate">
+          <v-btn
+            class="info mr-4 white--text"
+            type="submit"
+            @click="validate"
+            :disabled="!enableLogin"
+          >
             Log in
           </v-btn>
         </v-form>
@@ -58,6 +63,7 @@ export default {
     fieldRules: [],
     checkbox: true,
     user: null,
+    enableLogin: true,
   }),
   created() {
     this.fieldRules = fieldRules;
@@ -73,6 +79,7 @@ export default {
     },
     async submitForm() {
       try {
+        this.enableLogin = false;
         let response = await login({
           email: this.email,
           password: this.password,
@@ -96,6 +103,7 @@ export default {
       } catch (e) {
         await state.dispatch("errorHandler/errorHandler", e);
       }
+      this.enableLogin = true;
     },
   },
   components: {},

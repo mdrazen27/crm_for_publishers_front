@@ -27,7 +27,13 @@
             @focusout="resetValidation"
             type="password"
           ></v-text-field>
-          <v-btn class="float-end" @click="validate"> Change Password</v-btn>
+          <v-btn
+            class="float-end"
+            @click="validate"
+            :disabled="!enablePasswordChange"
+          >
+            Change Password</v-btn
+          >
         </v-form>
       </v-col>
     </v-row>
@@ -47,6 +53,7 @@ export default {
     newPassword: "",
     oldPassword: "",
     fieldRules: [],
+    enablePasswordChange: true,
   }),
   created() {
     this.fieldRules = fieldRules;
@@ -62,6 +69,7 @@ export default {
     },
     async submitForm() {
       try {
+        this.enablePasswordChange = false;
         let result = await changePassword({
           newPassword: this.newPassword,
           oldPassword: this.oldPassword,
@@ -78,6 +86,7 @@ export default {
       } catch (e) {
         await state.dispatch("errorHandler/errorHandler", e);
       }
+      this.enablePasswordChange = true;
     },
   },
   components: {},
