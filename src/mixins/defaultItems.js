@@ -12,3 +12,9 @@ export const defaultAdmin = {
   email: "",
   password: "",
 };
+
+export const defaultAdvertisement = {
+  id: null,
+  name: "",
+  url: "",
+};

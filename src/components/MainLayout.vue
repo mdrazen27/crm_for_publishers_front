@@ -96,8 +96,6 @@ export default {
       return this.user?.publisherName || this.user?.email;
     },
     joinDate() {
-      let date = new Date(this.user.created_at);
-      console.log(date);
       return this.user.created_at.split(" ")[0];
     },
   },

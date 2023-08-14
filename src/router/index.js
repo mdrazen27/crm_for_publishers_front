@@ -1,6 +1,5 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import HomeView from "@/views/HomeView.vue";
 import store from "@/store";
 
 Vue.use(VueRouter);
@@ -9,7 +8,10 @@ const routes = [
   {
     path: "/advertisements",
     name: "advertisements",
-    component: HomeView,
+    component: () =>
+      import(
+        /* webpackChunkName: "advertisements" */ "@/views/AdvertisementsView"
+      ),
     meta: {
       auth: true,
       roles: [1, 2],
