@@ -130,6 +130,7 @@ export default {
     closeDialog() {
       this.$emit("closeDialogEvent");
       this.$refs.publisherForm.resetValidation();
+      this.publisherItem = Object.assign({}, defaultPublisher);
     },
     openDialog() {
       if (this.publisher) {
@@ -137,7 +138,6 @@ export default {
         this.publisherDialogTitle = "Edit " + this.publisher.name;
       } else {
         this.publisherDialogTitle = "Create new publisher";
-        this.publisherItem = Object.assign({}, defaultPublisher);
       }
     },
   },

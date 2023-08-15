@@ -1,5 +1,5 @@
 <template>
-  <v-container tag="full-size-centered">
+  <v-container class="full-size-centered">
     <v-row class="no-growth">
       <v-col cols="12">
         <v-img
@@ -111,7 +111,7 @@ export default {
 </script>
 
 <style>
-full-size-centered {
+.full-size-centered {
   height: 100%;
   display: flex;
   flex-direction: column;

@@ -122,6 +122,7 @@ export default {
     closeDialog() {
       this.$emit("closeDialogEvent");
       this.$refs.advertisementForm.resetValidation();
+      this.advertisementItem = Object.assign({}, defaultAdvertisement);
     },
     openDialog() {
       if (this.advertisement) {
@@ -129,7 +130,6 @@ export default {
         this.advertisementDialogTitle = "Edit " + this.advertisement.name;
       } else {
         this.advertisementDialogTitle = "Create new advertisement";
-        this.advertisementItem = Object.assign({}, defaultAdvertisement);
       }
     },
   },

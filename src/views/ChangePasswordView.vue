@@ -1,5 +1,5 @@
 <template>
-  <v-container tag="full-size-centered">
+  <v-container class="full-size-centered">
     <v-row class="justify-center mt-5 no-growth">
       <v-col sm="10" md="7" lg="5" xl="4">
         <v-form ref="form" v-model="valid" @submit.prevent>
@@ -94,7 +94,7 @@ export default {
 </script>
 
 <style>
-full-size-centered {
+.full-size-centered {
   height: 100%;
   display: flex;
   justify-content: center;
