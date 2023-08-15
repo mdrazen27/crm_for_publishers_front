@@ -9,8 +9,10 @@
   },
   "dependencies": {
     "axios": "^1.4.0",
+    "chart.js": "^4.3.3",
     "core-js": "^3.8.3",
     "vue": "^2.6.14",
+    "vue-chartjs": "^5.2.0",
     "vue-router": "^3.5.1",
     "vuetify": "^2.6.0",
     "vuex": "^3.6.2",
@@ -49,7 +51,12 @@
       "parser": "@babel/eslint-parser"
     },
     "rules": {
-      "vue/valid-v-slot": ["error", { "allowModifiers": true }]
+      "vue/valid-v-slot": [
+        "error",
+        {
+          "allowModifiers": true
+        }
+      ]
     }
   },
   "browserslist": [
