@@ -4,11 +4,14 @@
       :footer-props="{
         pageText: '{0}-{1} of {2}',
         itemsPerPageText: 'Publishers per page',
-        itemsPerPageOptions: [10, 20],
+        itemsPerPageOptions: itemsPerPage,
       }"
       :headers="publisherHeaders"
       :items="upToDatePublishers"
       :search="searchPublisherString"
+      :options.sync="options"
+      :server-items-length="totalPublishers"
+      :loading="loading"
       class="elevation-1"
     >
       <template v-slot:top>
@@ -24,8 +27,8 @@
           ></v-text-field>
           <v-spacer></v-spacer>
           <v-btn class="mb-2" color="primary" dark @click="createNewPublisher"
-            >Add</v-btn
-          >
+            >Add
+          </v-btn>
           <add-or-edit-publisher-component
             @reloadPublishers="loadAllPublishers"
             @updatePublisherData="updatePublisherData"
@@ -95,13 +98,17 @@ export default {
   data: () => ({
     searchPublisherString: "",
     publisherHeaders: [],
-    itms: [10, 20],
+    itemsPerPage: [10, 20],
     publishers: [],
     showDialog: false,
     publisher: null,
+    totalPublishers: 0,
+    loading: true,
+    options: {},
+    callApi: true,
+    userRole: null,
   }),
   created() {
-    this.loadAllPublishers();
     this.publisherHeaders = publisherHeaders;
   },
   computed: {
@@ -112,8 +119,17 @@ export default {
   methods: {
     async loadAllPublishers() {
       try {
-        let response = await getAllPublishers();
+        let response = await getAllPublishers(
+          this.options,
+          this.searchPublisherString
+        );
         this.publishers = response.data;
+        this.totalPublishers = response.meta.total;
+        if (this.options.page > response.meta.last_page) {
+          this.callApi = false;
+          this.options.page = 1;
+        }
+        this.loading = false;
       } catch (e) {
         await state.dispatch("errorHandler/errorHandler", e);
       }
@@ -157,6 +173,23 @@ export default {
         this.publishers[original].email = item.email;
         this.publishers[original].updated_at = item.updated_at;
       }
+    },
+  },
+  watch: {
+    options: {
+      handler() {
+        if (this.callApi) {
+          this.loadAllPublishers();
+        }
+        this.callApi = true;
+      },
+      deep: true,
+    },
+    searchPublisherString: {
+      handler() {
+        this.loadAllPublishers();
+      },
+      deep: true,
     },
   },
 };

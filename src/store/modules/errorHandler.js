@@ -3,13 +3,14 @@ export default {
   actions: {
     errorHandler(state, error) {
       if (error.response) {
-        if (error.response.status === 401) {
+        let status = error.response.status;
+        if (status === 401) {
           this.dispatch("auth/logout");
           this.dispatch("showSnackbar", {
             text: "You have to log in again!",
             color: "red",
           });
-        } else if (error.response.status === 422) {
+        } else if (status === 422 || status === 403) {
           this.dispatch("showSnackbar", {
             text: error.response.data.message,
             color: "red",
