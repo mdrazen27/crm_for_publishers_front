@@ -86,7 +86,7 @@ import { fieldRules } from "@/mixins/fieldRules";
 import { defaultPublisher } from "@/mixins/defaultItems";
 
 export default {
-  name: "AddOrEditPublisherComponent",
+  name: "AddOrEditPublisher",
   props: ["publisher", "showDialog"],
   data: () => ({
     publisherDialogTitle: "Create new publisher",

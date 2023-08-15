@@ -47,6 +47,13 @@
         />
         <side-menu-item
           class_name="ml-4"
+          route_name="statistics"
+          icon="mdi mdi-chart-areaspline"
+          title="Statistics"
+          tooltip="Statistics"
+        />
+        <side-menu-item
+          class_name="ml-4"
           route_name="changePassword"
           icon="mdi mdi-lock-reset"
           title="Change Password"

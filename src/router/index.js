@@ -55,6 +55,16 @@ const routes = [
       roles: [1, 2],
     },
   },
+  {
+    path: "/statistics",
+    name: "statistics",
+    component: () =>
+      import(/* webpackChunkName: "statistics" */ "@/views/StatisticsView"),
+    meta: {
+      auth: true,
+      roles: [1, 2],
+    },
+  },
 ];
 
 export const rolesMap = [

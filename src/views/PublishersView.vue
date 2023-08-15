@@ -29,7 +29,7 @@
           <v-btn class="mb-2" color="primary" dark @click="createNewPublisher"
             >Add
           </v-btn>
-          <add-or-edit-publisher-component
+          <add-or-edit-publisher
             @reloadPublishers="loadAllPublishers"
             @updatePublisherData="updatePublisherData"
             @closeDialogEvent="showDialog = false"
@@ -90,11 +90,11 @@ import {
 } from "@/api/publishers";
 import state from "@/store";
 import { publisherHeaders } from "@/mixins/tableHeaders";
-import AddOrEditPublisherComponent from "@/components/AddOrEditPublisherComponent";
+import AddOrEditPublisher from "@/components/AddOrEditPublisher";
 
 export default {
   name: "PublishersView",
-  components: { AddOrEditPublisherComponent },
+  components: { AddOrEditPublisher },
   data: () => ({
     searchPublisherString: "",
     publisherHeaders: [],
