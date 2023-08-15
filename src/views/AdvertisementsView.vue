@@ -9,6 +9,9 @@
       :headers="advertisementHeaders"
       :items="upToDateAdvertisements"
       :search="searchAdvertisementString"
+      :options.sync="options"
+      :server-items-length="totalAdvertisements"
+      :loading="loading"
       class="elevation-1"
     >
       <template v-slot:top>
@@ -28,8 +31,9 @@
             color="primary"
             dark
             @click="createNewAdvertisement"
-            >Add</v-btn
           >
+            Add
+          </v-btn>
           <add-or-edit-advertisement
             @reloadAdvertisements="loadAllAdvertisements"
             @updateAdvertisementData="updateAdvertisementData"
@@ -42,6 +46,7 @@
       <template v-slot:item.active="{ item }">
         <v-switch
           v-model="item.active"
+          :disabled="userRole === 1"
           inset
           color="green"
           @click="toggleAdvertisementActiveStatus(item)"
@@ -90,7 +95,10 @@ import {
   toggleAdvertisementStatus,
 } from "@/api/advertisements";
 import state from "@/store";
-import { advertisementHeaders } from "@/mixins/tableHeaders";
+import {
+  advertisementHeaders,
+  adminAdvertisementHeaders,
+} from "@/mixins/tableHeaders";
 import AddOrEditAdvertisement from "@/components/AddOrEditAdvertisement";
 
 export default {
@@ -103,10 +111,19 @@ export default {
     advertisements: [],
     showDialog: false,
     advertisement: null,
+    totalAdvertisements: 0,
+    loading: true,
+    options: {},
+    callApi: true,
+    userRole: null,
   }),
   created() {
-    this.loadAllAdvertisements();
-    this.advertisementHeaders = advertisementHeaders;
+    this.userRole = state.getters["auth/role"];
+    if (this.userRole === 1) {
+      this.advertisementHeaders = adminAdvertisementHeaders;
+    } else {
+      this.advertisementHeaders = advertisementHeaders;
+    }
   },
   computed: {
     upToDateAdvertisements() {
@@ -116,11 +133,21 @@ export default {
   methods: {
     async loadAllAdvertisements() {
       try {
-        let response = await getAllAdvertisements();
+        this.loading = true;
+        let response = await getAllAdvertisements(
+          this.options,
+          this.searchAdvertisementString
+        );
         this.advertisements = response.data;
+        this.totalAdvertisements = response.meta.total;
+        if (this.options.page > response.meta.last_page) {
+          this.callApi = false;
+          this.options.page = 1;
+        }
       } catch (e) {
         await state.dispatch("errorHandler/errorHandler", e);
       }
+      this.loading = false;
     },
     async editAdvertisement(item) {
       this.advertisement = item;
@@ -161,6 +188,23 @@ export default {
         this.advertisements[original].email = item.email;
         this.advertisements[original].updated_at = item.updated_at;
       }
+    },
+  },
+  watch: {
+    options: {
+      handler() {
+        if (this.callApi) {
+          this.loadAllAdvertisements();
+        }
+        this.callApi = true;
+      },
+      deep: true,
+    },
+    searchAdvertisementString: {
+      handler() {
+        this.loadAllAdvertisements();
+      },
+      deep: true,
     },
   },
 };
