@@ -57,3 +57,12 @@ export const togglePublisherStatus = async (data) => {
   );
   return response.data;
 };
+
+export const searchForPublisher = async (searchString) => {
+  let response = await httpClient(
+    process.env.VUE_APP_API_URL +
+      "/publishers" +
+      `?search=${searchString}&per_page=20`
+  );
+  return response.data;
+};
