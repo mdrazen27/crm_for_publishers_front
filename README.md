@@ -9,6 +9,7 @@ npm install
 ```
 npm run serve
 ```
+****If it fails compiling run linter***
 
 ### Compiles and minifies for production
 ```
