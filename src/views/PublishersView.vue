@@ -119,6 +119,7 @@ export default {
   methods: {
     async loadAllPublishers() {
       try {
+        this.loading = true;
         let response = await getAllPublishers(
           this.options,
           this.searchPublisherString
@@ -129,10 +130,10 @@ export default {
           this.callApi = false;
           this.options.page = 1;
         }
-        this.loading = false;
       } catch (e) {
         await state.dispatch("errorHandler/errorHandler", e);
       }
+      this.loading = false;
     },
     async editPublisher(item) {
       this.publisher = item;
@@ -187,7 +188,9 @@ export default {
     },
     searchPublisherString: {
       handler() {
-        this.loadAllPublishers();
+        if (!this.loading) {
+          this.loadAllPublishers();
+        }
       },
       deep: true,
     },

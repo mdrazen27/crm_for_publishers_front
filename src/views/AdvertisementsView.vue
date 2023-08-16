@@ -211,7 +211,9 @@ export default {
     },
     searchAdvertisementString: {
       handler() {
-        this.loadAllAdvertisements();
+        if (!this.loading) {
+          this.loadAllAdvertisements();
+        }
       },
       deep: true,
     },

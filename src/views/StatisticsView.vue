@@ -33,7 +33,7 @@
       </v-col>
       <v-col class="mb-5" cols="12" md="12" sm="12">
         <v-card class="text-center">
-          <v-card-title> Views per month for current year </v-card-title>
+          <v-card-title> Views per day for current year </v-card-title>
           <v-card-text>
             <line-chart
               :chartData="viewsPerDayChartData"
@@ -51,7 +51,9 @@
               :chartData="topTenCountriesChartData"
               :labels="topTenCountriesLabels"
               :height="400"
+              v-if="topTenCountriesChartData.length"
             ></pie-chart>
+            <h2 v-else class="text-left">No data</h2>
           </v-card-text>
         </v-card>
       </v-col>
@@ -60,10 +62,12 @@
           <v-card-title> Top 5 Advertisements by views </v-card-title>
           <v-card-text>
             <pie-chart
+              v-if="topFiveActiveAdvertisementsChartData.length"
               :chartData="topFiveActiveAdvertisementsChartData"
               :labels="topFiveActiveAdvertisementsLabels"
               :height="400"
             ></pie-chart>
+            <h2 v-else class="text-left">No data</h2>
           </v-card-text>
         </v-card>
       </v-col>
@@ -126,6 +130,7 @@ export default {
     async loadStatisticsPerMonth() {
       let response = await statisticsPerMonth(this.publisher?.id);
       this.viewsPerMonthLabels = [...this.months];
+      this.viewsPerMonthChartData = [];
       response.forEach((e) => {
         this.viewsPerMonthChartData[e.month] = e.count;
       });
