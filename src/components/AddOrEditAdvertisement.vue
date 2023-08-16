@@ -27,7 +27,7 @@
               <v-col cols="12" md="12" sm="12">
                 <v-text-field
                   v-model="advertisementItem.url"
-                  :rules="fieldRules.required"
+                  :rules="fieldRules.url"
                   clearable
                   counter="255"
                   label="Url"

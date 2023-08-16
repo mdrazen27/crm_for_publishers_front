@@ -24,15 +24,14 @@
 
           <v-text-field
             v-model="password"
-            :rules="fieldRules.required"
+            :rules="fieldRules.password"
             label="Password"
             required
             @focusout="resetValidation"
-            type="password"
+            :type="showPassword ? 'text' : 'password'"
+            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+            @click:append="showPassword = !showPassword"
           ></v-text-field>
-
-          <v-checkbox v-model="checkbox" label="Remember me"></v-checkbox>
-
           <v-btn
             class="info mr-4 white--text"
             type="submit"
@@ -61,9 +60,9 @@ export default {
     email: "",
     password: "",
     fieldRules: [],
-    checkbox: true,
     user: null,
     enableLogin: true,
+    showPassword: false,
   }),
   created() {
     this.fieldRules = fieldRules;

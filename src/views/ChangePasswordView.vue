@@ -9,6 +9,9 @@
             autofocus
             label="Old Password"
             required
+            :type="showOldPassword ? 'text' : 'password'"
+            :append-icon="showOldPassword ? 'mdi-eye' : 'mdi-eye-off'"
+            @click:append="showOldPassword = !showOldPassword"
             @focusout="resetValidation"
           ></v-text-field>
           <v-text-field
@@ -17,15 +20,19 @@
             label="New Password"
             required
             @focusout="resetValidation"
-            type="password"
+            :type="showNewPassword ? 'text' : 'password'"
+            :append-icon="showNewPassword ? 'mdi-eye' : 'mdi-eye-off'"
+            @click:append="showNewPassword = !showNewPassword"
           ></v-text-field>
           <v-text-field
             v-model="repeatPassword"
             :rules="fieldRules.password"
+            :type="showRepeatPassword ? 'text' : 'password'"
             label="Password confirmation"
             required
             @focusout="resetValidation"
-            type="password"
+            :append-icon="showRepeatPassword ? 'mdi-eye' : 'mdi-eye-off'"
+            @click:append="showRepeatPassword = !showRepeatPassword"
           ></v-text-field>
           <v-btn
             class="float-end"
@@ -52,6 +59,9 @@ export default {
     repeatPassword: "",
     newPassword: "",
     oldPassword: "",
+    showNewPassword: false,
+    showRepeatPassword: false,
+    showOldPassword: false,
     fieldRules: [],
     enablePasswordChange: true,
   }),

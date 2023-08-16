@@ -1,6 +1,10 @@
 import { httpClient } from "@/api/client";
 
-export const getAllAdvertisements = async (options, searchString) => {
+export const getAllAdvertisements = async (
+  options,
+  searchString,
+  onlyDeleted
+) => {
   const { sortBy, sortDesc, page, itemsPerPage } = options;
   let queryString = `?page=${page}&per_page=${itemsPerPage}`;
   if (sortBy.length) {
@@ -8,6 +12,9 @@ export const getAllAdvertisements = async (options, searchString) => {
   }
   if (searchString) {
     queryString += `&search=${searchString}`;
+  }
+  if (onlyDeleted) {
+    queryString += `&deleted=true`;
   }
   let response = await httpClient(
     process.env.VUE_APP_API_URL + "/advertisements" + queryString

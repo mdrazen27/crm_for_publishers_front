@@ -25,8 +25,15 @@
             label="Search"
             single-line
           ></v-text-field>
+          <v-checkbox
+            class="mt-5"
+            label="Deleted"
+            v-model="onlyDeleted"
+            @change="loadAllAdvertisements"
+          ></v-checkbox>
           <v-spacer></v-spacer>
           <v-btn
+            v-if="userRole !== 1"
             class="mb-2"
             color="primary"
             dark
@@ -46,14 +53,14 @@
       <template v-slot:item.active="{ item }">
         <v-switch
           v-model="item.active"
-          :disabled="userRole === 1"
+          :disabled="userRole === 1 || onlyDeleted"
           inset
           color="green"
           @click="toggleAdvertisementActiveStatus(item)"
         ></v-switch>
       </template>
 
-      <template v-slot:item.actions="{ item }">
+      <template v-slot:item.actions="{ item }" v-if="!onlyDeleted">
         <v-tooltip left>
           <template v-slot:activator="{ on, attrs }">
             <v-icon
@@ -112,6 +119,7 @@ export default {
     showDialog: false,
     advertisement: null,
     totalAdvertisements: 0,
+    onlyDeleted: false,
     loading: true,
     options: {},
     callApi: true,
@@ -136,7 +144,8 @@ export default {
         this.loading = true;
         let response = await getAllAdvertisements(
           this.options,
-          this.searchAdvertisementString
+          this.searchAdvertisementString,
+          this.onlyDeleted
         );
         this.advertisements = response.data;
         this.totalAdvertisements = response.meta.total;
